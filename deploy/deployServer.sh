@@ -1,16 +1,8 @@
 #!/bin/bash
 set -euo pipefail
-echo "Installing dependencies"
-apt-get install -y git
-
-
-echo "Cloning the repo"
-cd /
-
-cd /2526-dotnet-template
 
 echo "Building Docker image"
-docker build -t rise-server -f /2526-dotnet-template/deploy/Dockerfile .
+docker build -t rise-server -f ./deploy/Dockerfile .
 
 echo "Starting Docker container"
 docker run -d \
