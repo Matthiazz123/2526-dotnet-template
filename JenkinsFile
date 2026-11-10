@@ -1,0 +1,21 @@
+pipeline {
+agent any
+
+stages {
+    stage('Checkout') {
+        steps {
+            // Checkout code from the repository configured in Jenkins job
+            git branch: 'main', url: 'https://github.com/Matthiazz123/2526-dotnet-temp'
+        }
+    }
+
+    stage('Deploy') {
+        steps {
+            // Execute the deploy script from the repository
+            sh 'bash ./deploy/deployServer.sh'
+        }
+    }
+}
+
+
+}
