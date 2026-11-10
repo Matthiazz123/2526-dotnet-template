@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
+# Stop and remove the old container if it exists (ignore errors if it doesn't)
+docker stop riseapp || true
+docker rm riseapp || true
+
 echo "Building Docker image"
 docker build -t rise-server -f ./deploy/Dockerfile .
 
