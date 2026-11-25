@@ -30,7 +30,7 @@ try
         {
             var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection") ??
                                    throw new InvalidOperationException("Connection string 'DatabaseConnection' not found.");
-            o.UseSqlite(connectionString); // Swap Sqlite for your database provider (e.g. Sql Server, MySQL, PostgreSQL, etc.).
+            o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             o.EnableDetailedErrors();
             if (builder.Environment.IsDevelopment())
             {
@@ -72,8 +72,8 @@ try
     var app = builder.Build();
     // apply Database migraticons on startup, not so wise in production (Use Generated SQL Scripts) 
     // See: https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli
-    if (app.Environment.IsDevelopment())
-    {
+//    if (app.Environment.IsDevelopment())
+  //  {
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -83,7 +83,7 @@ try
             dbContext.Database.Migrate(); // Creates the database if it doesn't exist and applies all migrations. See Readme.md for more info.
             await dbSeeder.SeedAsync(); // Seeds the database with some test data.
         }
-    }
+    //}
     // Theses middlewares are strict in order of calling!
     app.UseHttpsRedirection()
         .UseBlazorFrameworkFiles() // Blazor is also served from the API. 
